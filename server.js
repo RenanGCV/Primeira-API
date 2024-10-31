@@ -1,11 +1,11 @@
 const express = require('express')
-let app = express()
-import { engine } from 'express-handlebars';
+let app = express();
+const { engine } = require ('express-handlebars');
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true}))
 
-app.engine('handlebars', handlebars({}))
+app.engine('handlebars', engine({}))
 app.set('view engine', 'handlebars')
 
 const usuarios = [
@@ -25,8 +25,9 @@ app.get('/usuarios', (req, res) => {
 
 //Le o input de dados de usuarios e retorna o texto de sucesso
 app.post('/usuarios', (req, res) => {
+    res.send("Nome: " + req.body.nome + "\nEmail: " + req.body.email)
     usuarios.push(req.body)
-    res.json({status: 'Usuario criado com sucesso!'})
+    
 })
 
 app.delete('/usuarios', (req, res) => {
